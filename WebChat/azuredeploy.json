@@ -66,7 +66,7 @@
         "linuxFxVersion": "NODE|lts",
         "hostingPlanNameLinux": "[concat('plan-linux-', parameters('siteName'))]",
         "hostingPlanNameWin": "[concat('plan-win-', parameters('siteName'))]",
-        "repoURL": "https://github.com/microsoft/HealthBotContainerSample.git",
+        "repoURL": "https://github.com/cmayomsft/HealthBotEngFund.git",
         "branch": "master",
         "kind": "[if(equals(parameters('operatingSystem'), 'windows'), 'app', 'linux')]",
         "linuxSiteName": "[if(equals(parameters('operatingSystem'), 'linux'), parameters('siteName'), 'app-na')]",
