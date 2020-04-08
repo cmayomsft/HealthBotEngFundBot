@@ -67,6 +67,7 @@
         "hostingPlanNameLinux": "[concat('plan-linux-', parameters('siteName'))]",
         "hostingPlanNameWin": "[concat('plan-win-', parameters('siteName'))]",
         "repoURL": "https://github.com/cmayomsft/HealthBotEngFund/WebChat",
+        "project": "WebChat",
         "branch": "master",
         "kind": "[if(equals(parameters('operatingSystem'), 'windows'), 'app', 'linux')]",
         "linuxSiteName": "[if(equals(parameters('operatingSystem'), 'linux'), parameters('siteName'), 'app-na')]",
