@@ -4,8 +4,8 @@
   "scenario_trigger": "covid19_assessment",
   "description": "Provide guidance to patients on COVID-19 with a remote virtual assessment",
   "active": true,
-  "updated": "2020-04-10T14:19:13.225Z",
-  "userDisplayName": "API",
+  "updated": "2020-04-10T15:03:55.08Z",
+  "userDisplayName": "Chris Mayo",
   "code": {
     "version": 3,
     "steps": [
@@ -17,7 +17,7 @@
           "yLocation": 60,
           "next": "cace401dfe02-61d5f27faaca275a-bb18"
         },
-        "text": "Hi, I'm here to guide you through the Coronavirus Assessment Tool.\r\n\r\nIf you're experiencing a life- or limb-threatening emergency, call [911](tel:911) or the number for your local emergency service.\r\n\r\nI'm not a substitute for professional medical advice, diagnosis, or treatment. Always consult a medical professional for serious symptoms or emergencies.",
+        "text": "DEV TEST - Hi, I'm here to guide you through the Coronavirus Assessment Tool.\r\n\r\nIf you're experiencing a life- or limb-threatening emergency, call [911](tel:911) or the number for your local emergency service.\r\n\r\nI'm not a substitute for professional medical advice, diagnosis, or treatment. Always consult a medical professional for serious symptoms or emergencies.",
         "stringId": "stringId_42f4ff4e200f66fe",
         "label": "Welcome"
       },
