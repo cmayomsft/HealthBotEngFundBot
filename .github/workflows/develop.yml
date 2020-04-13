@@ -24,19 +24,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Display the path
-        run: echo ${env:PATH}
-        shell: pwsh
-
       # Import the required PowerShell module for Healthcare Bot Scenarios.
       - name: Import HCBotScenarioIE PowerShell module.
-        run: Import-Module -Name Scripts/ScenarioImportExport/HCBotScenarioIE/;
+        run: Import-Module -Name Scripts/ScenarioImportExport/HCBotScenarioIE;
         shell: pwsh
 
-      # Import the Scenarios in source to the bot instance.
-      - name: Import HCB Scenarios.
-        run: Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
-        shell: pwsh
+      # # Import the Scenarios in source to the bot instance.
+      # - name: Import HCB Scenarios.
+      #   run: Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
+      #   shell: pwsh
 
 
 
