@@ -26,7 +26,7 @@ jobs:
 
       # Import the required PowerShell module for Healthcare Bot Scenarios.
       - name: Import HCBotScenarioIE PowerShell module.
-        run: Import-Module -Name Scripts/ScenarioImportExport/HCBotScenarioIE;
+        run: Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
         shell: pwsh
 
       # # Import the Scenarios in source to the bot instance.
