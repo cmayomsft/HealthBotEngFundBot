@@ -1,3 +1,6 @@
 node_modules/
 .env
 .vscode
+
+# Ignore scenario files created when testing import/export.
+Scripts/ScenarioImportExport/HCBotScenarioIE/temp/
