@@ -11,18 +11,20 @@ on:
   push:
     # branches: [ develop ]
     # The push must include changes to Scenarios.
-    # - "scenarios/**"
+    # - "Scenarios/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     env:
-      scenariosFilePath: ${{ 'scenarios/**' }}
+      scenariosFilePath: ${{ 'Scenarios/**' }}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-
+      # Import the required modules.
+      - name: Import Healthcare Bot Scenarios PowerShell module.
+        run: Import-Module -Name ./Scripts/SceanrioImportExport/HCBotScenarioIE/;
 
