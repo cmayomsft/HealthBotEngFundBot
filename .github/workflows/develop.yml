@@ -29,10 +29,10 @@ jobs:
         run: Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
         shell: pwsh
 
-      # # Import the Scenarios in source to the bot instance.
-      # - name: Import HCB Scenarios.
-      #   run: Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
-      #   shell: pwsh
+      # Import the Scenarios in source to the bot instance.
+      - name: Import HCB Scenarios.
+        run: Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
+        shell: pwsh
 
 
 
