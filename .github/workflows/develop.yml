@@ -29,6 +29,7 @@ jobs:
         shell: pwsh
 
       # Import the required modules.
-      # - name: Import Healthcare Bot Scenarios PowerShell module.
-      #   run: Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
+      - name: Import Healthcare Bot Scenarios PowerShell module.
+        run: Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
+        shell: pwsh
 
