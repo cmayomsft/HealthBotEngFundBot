@@ -9,9 +9,9 @@ name: Develop CI Pipeline
 on:
   # Execute on pushes to develop branch.
   push:
-    # branches: [ develop ]
+    branches: [ develop ]
     # The push must include changes to Scenarios.
-    # - "Scenarios/**"
+    - "Scenarios/**"
 
 jobs:
   build:
