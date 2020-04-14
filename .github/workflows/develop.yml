@@ -23,6 +23,11 @@ jobs:
       scenariosFilePath: ${{ './Scenarios' }}
 
     steps:
+      
+      ###########################################################################
+      # Steps used for both CI and CD.
+      ###########################################################################
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
@@ -39,9 +44,7 @@ jobs:
 
       # Set internal variables that the user will not want to set themselves.
       - name: Set environment variables
-        run: |
-          echo "::set-env name=commitHash::$(git rev-parse --short HEAD)"
-          echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
+        run: echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
 
       ###########################################################################
       #
@@ -61,4 +64,17 @@ jobs:
       #   Continuous Delivery
       #
       ###########################################################################
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.semVer }}
+          release_name: Release ${{ env.semVer }}
+          body: |
+            Releasing new Release Asset
+            draft: false
+            prerelease: false
 
