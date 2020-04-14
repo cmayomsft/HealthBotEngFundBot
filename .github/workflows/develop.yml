@@ -16,7 +16,7 @@ on:
     #   - "Scenarios/**"
 
 jobs:
-  build:
+  import:
     runs-on: ubuntu-latest
 
     env:
@@ -26,6 +26,29 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # https://github.com/anothrNick/github-tag-action
+      - name: Bump version and DON'T push tag
+        id: bumpVersion
+        uses: anothrNick/github-tag-action@1.17.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DRY_RUN: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: master
+
+      # Set internal variables that the user will not want to set themselves.
+      - name: Set environment variables
+        run: |
+          echo "::set-env name=commitHash::$(git rev-parse --short HEAD)"
+          echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
+
+      ###########################################################################
+      #
+      #   Continuous Integration
+      #
+      ###########################################################################
+
       # Import Scenarios in source to the bot instance.
       - name: Import HCB Scenarios.
         run: |
@@ -33,5 +56,9 @@ jobs:
           Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.PROD_TENANT_NAME }} -JwtSecret ${{ secrets.PROD_JWT_SECRET }} -InformationAction Continue;
         shell: pwsh
 
-
+      ###########################################################################
+      #
+      #   Continuous Delivery
+      #
+      ###########################################################################
 
