@@ -25,11 +25,11 @@ jobs:
       - uses: actions/checkout@v2
 
       # Import Scenarios in source to the bot instance.
-      #   NOTE: Not sure why both needs to be imported, assume that module needs to be imported in the same script it's used, since not installed.
+      #   NOTE: Not sure why both needs to be imported in the same call, but assume that module needs to be imported in the same script it's used, since not installed.
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
-          Set-HCBScenario -FromFolder ./Scenarios -Tenant "devhealthbotengfundbot-cyydnq2" -JwtSecret ${{ secrets.DEV_JWT_SECRET  }} -InformationAction Continue;
+          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
         shell: pwsh
 
 
