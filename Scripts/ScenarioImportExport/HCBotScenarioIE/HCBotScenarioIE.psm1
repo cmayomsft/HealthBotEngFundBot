@@ -353,7 +353,7 @@ function Set-HCBScenario {
 
         [Parameter(Mandatory = $False, ParameterSetName = "Files")]
         [ValidateNotNullOrEmpty()]
-        [string[]]$FileFilter = "*.scenario.json",
+        [string[]]$FileFilter = "*.json",
 
         [Parameter(Mandatory = $False)]
         [ValidateSet("us", "eu")]
