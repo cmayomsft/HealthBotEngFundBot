@@ -31,7 +31,7 @@ jobs:
 
       # Import the Scenarios in source to the bot instance.
       - name: Import HCB Scenarios.
-        run: Set-HCBScenario -FromFolder "./Scenarios/" -Tenant "devhealthbotengfundbot-cyydnq2" -JwtSecret "c0852149e5a32fc84cdd95c1e9c30c91f393d45b4c706bfee6ec6123d04aacc3" -InformationAction Continue;
+        run: Set-HCBScenario -FromFolder ./Scenarios -Tenant "devhealthbotengfundbot-cyydnq2" -JwtSecret "36b6613ea5e2b143e8492aa3e86abdcbe19e53363b357f110ed4651cfc773b79" -InformationAction Continue;
         shell: pwsh
 
 
