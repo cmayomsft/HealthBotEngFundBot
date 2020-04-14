@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      scenariosFilePath: ${{ './Scenarios/' }}
+      scenariosFilePath: ${{ './Scenarios' }}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,7 +30,7 @@ jobs:
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
-          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.PROD_TENANT_NAME }} -JwtSecret ${{ secrets.PROD_JWT_SECRET }} -InformationAction Continue;
+          Set-HCBScenario -FromFolder ${{ env.scenariosFilePath }} -Tenant ${{ secrets.PROD_TENANT_NAME }} -JwtSecret ${{ secrets.PROD_JWT_SECRET }} -InformationAction Continue;
         shell: pwsh
 
 
