@@ -1,16 +1,16 @@
 ###############################################################################
 #
-# Develop Continuous Improvement Pipeline
+# Continuous Improvement/Continuous Deployment Pipeline
 #
 ###############################################################################
 
-name: Develop CI Pipeline
+name: CI/CD Pipeline
 
 on:
-  # Execute on pushes to develop branch.
+  # Execute on pushes to master branch.
   push:
     branches: 
-      - develop
+      - master
     # The push must include changes to Scenarios.
     paths:
       - "Scenarios/**"
@@ -27,7 +27,6 @@ jobs:
       - uses: actions/checkout@v2
 
       # Import Scenarios in source to the bot instance.
-      #   NOTE: Not sure why both needs to be imported in the same call, but assume that module needs to be imported in the same script it's used, since not installed.
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
