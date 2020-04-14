@@ -9,11 +9,11 @@ name: CI/CD Pipeline
 on:
   # Execute on pushes to master branch.
   push:
-    branches: 
-      - master
-    # The push must include changes to Scenarios.
-    paths:
-      - "Scenarios/**"
+    # branches: 
+    #   - master
+    # # The push must include changes to Scenarios.
+    # paths:
+    #   - "Scenarios/**"
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
-          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
+          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.PROD_TENANT_NAME }} -JwtSecret ${{ secrets.PROD_JWT_SECRET }} -InformationAction Continue;
         shell: pwsh
 
 
