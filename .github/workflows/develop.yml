@@ -24,11 +24,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Import the Scenarios in source to the bot instance.
+      # Import Scenarios in source to the bot instance.
+      #   NOTE: Not sure why both needs to be imported, assume that module needs to be imported in the same script it's used, since not installed.
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
-          Set-HCBScenario -FromFolder ./Scenarios -Tenant "devhealthbotengfundbot-cyydnq2" -JwtSecret "36b6613ea5e2b143e8492aa3e86abdcbe19e53363b357f110ed4651cfc773b79" -InformationAction Continue;
+          Set-HCBScenario -FromFolder ./Scenarios -Tenant "devhealthbotengfundbot-cyydnq2" -JwtSecret ${{ secrets.DEV_JWT_SECRET  }} -InformationAction Continue;
         shell: pwsh
 
 
