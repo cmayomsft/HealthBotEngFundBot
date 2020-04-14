@@ -9,25 +9,30 @@ name: Develop CI Pipeline
 on:
   # Execute on pushes to develop branch.
   push:
-    branches: [ develop ]
+    branches: 
+      - develop
     # The push must include changes to Scenarios.
-    # - "Scenarios/**"
+    paths:
+      - "Scenarios/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      scenariosFilePath: ${{ './Scenarios/' }}
+
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
+      # Import Scenarios in source to the bot instance.
+      #   NOTE: Not sure why both needs to be imported in the same call, but assume that module needs to be imported in the same script it's used, since not installed.
+      - name: Import HCB Scenarios.
+        run: |
+          Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
+          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
+        shell: pwsh
 
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
-        echo ${{ secrets.TEST_SECRET }}
+
+
