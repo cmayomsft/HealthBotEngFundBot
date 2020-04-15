@@ -219,6 +219,10 @@ Describe 'Set-HCBScenario' {
                 Assert-MockCalled Invoke-WebRequest -Times 2 -ParameterFilter { $Method -eq "POST" && $Body -like '**"code": "**' }
             }
 
+            It 'Calls Invoke-WebRequest with json type and explicitly specified UTF-8 encoding' {
+                Assert-MockCalled Invoke-WebRequest -Times 2 -ParameterFilter { $ContentType -eq "application/json; charset=utf-8" }
+            }
+
             It 'Calls Invoke-WebRequest with OAuth Authorization' {
                 Assert-MockCalled Invoke-WebRequest -Times 2 -ParameterFilter { $Authentication -in "OAuth", "Bearer" }
             }
@@ -300,6 +304,14 @@ Describe 'Set-HCBScenario' {
             }
         }
 
+        It 'Posts Notthing for Empty Filter Result' {
+            Mock Invoke-WebRequest -ModuleName $ModuleName { }
+
+            Set-HCBScenario -FromFolder $SCENARIOS_FIXTURE_PATH -FileFilter "*.notexist" -Tenant $TENANT_NAME -JwtSecret $JWT_SECRET -WarningAction SilentlyContinue;
+
+            Assert-MockCalled Invoke-WebRequest -Times 0 -ParameterFilter { $Method -eq "POST" };
+        }    
+
         It "Calls Europe Service Instance When Called with -ServiceRegion eu" {
             Mock Invoke-WebRequest -ModuleName $ModuleName {
                 return $SCENARIOS_GET_SUCCESS_RESPONSE_STUB;
@@ -317,7 +329,7 @@ Describe 'Set-HCBScenario' {
 
             Assert-MockCalled Invoke-WebRequest -Times 1 -ParameterFilter { $Method -eq "POST" }
             Assert-MockCalled Invoke-WebRequest -Times 1 -ParameterFilter { $Method -eq "POST" && $Body -like "**greeting**" }
-        }
+        }    
     }
 }
 

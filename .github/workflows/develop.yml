@@ -1,38 +1,80 @@
 ###############################################################################
 #
-# Develop Continuous Improvement Pipeline
+# Continuous Improvement/Continuous Deployment Pipeline
 #
 ###############################################################################
 
-name: Develop CI Pipeline
+name: CI/CD Pipeline
 
 on:
-  # Execute on pushes to develop branch.
+  # Execute on pushes to master branch.
   push:
     branches: 
-      - develop
+      - master
     # The push must include changes to Scenarios.
     paths:
       - "Scenarios/**"
 
 jobs:
-  build:
+  CICD:
     runs-on: ubuntu-latest
 
     env:
-      scenariosFilePath: ${{ './Scenarios/' }}
+      scenariosFolderPath: ${{ './Scenarios' }}
+      scenariosFileFilter: ${{ '*.scenario.json' }}
 
     steps:
+      
+      ###########################################################################
+      # Steps used for both CI and CD.
+      ###########################################################################
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # https://github.com/anothrNick/github-tag-action
+      - name: Bump version and DON'T push tag
+        id: bumpVersion
+        uses: anothrNick/github-tag-action@1.17.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DRY_RUN: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: master
+
+      # Set internal variables that the user will not want to set themselves.
+      - name: Set environment variables
+        run: echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
+
+      ###########################################################################
+      #
+      #   Continuous Integration
+      #
+      ###########################################################################
+
       # Import Scenarios in source to the bot instance.
-      #   NOTE: Not sure why both needs to be imported in the same call, but assume that module needs to be imported in the same script it's used, since not installed.
       - name: Import HCB Scenarios.
         run: |
           Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
-          Set-HCBScenario -FromFolder ./Scenarios -Tenant ${{ secrets.DEV_TENANT_NAME }} -JwtSecret ${{ secrets.DEV_JWT_SECRET }} -InformationAction Continue;
+          Set-HCBScenario -FromFolder ${{ env.scenariosFolderPath }} -FileFilter ${{ env.scenariosFileFilter }} -Tenant ${{ secrets.PROD_TENANT_NAME }} -JwtSecret ${{ secrets.PROD_JWT_SECRET }} -InformationAction Continue;
         shell: pwsh
 
+      ###########################################################################
+      #
+      #   Continuous Delivery
+      #
+      ###########################################################################
 
-
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.semVer }}
+          release_name: Release ${{ env.semVer }}
+          body: |
+            Creating a new release
+            draft: false
+            prerelease: false
