@@ -353,7 +353,7 @@ function Set-HCBScenario {
 
         [Parameter(Mandatory = $False, ParameterSetName = "Files")]
         [ValidateNotNullOrEmpty()]
-        [string[]]$FileFilter = "*.json",
+        [string[]]$FileFilter = "*.scenario.json",
 
         [Parameter(Mandatory = $False)]
         [ValidateSet("us", "eu")]
@@ -371,7 +371,10 @@ function Set-HCBScenario {
         try {
             if ($FromFolder) {
                 if (!$FromFolder.EndsWith("*")) { $FromFolder = Join-Path $FromFolder "*" };
-                $Scenarios = Get-Content $FromFolder -Include $FileFilter -Raw;
+                $Scenarios = Get-ChildItem -Path $FromFolder -Include $FileFilter -ErrorAction Stop | Get-Content -Raw;
+                if (!$Scenarios -or $Scenarios.Count -eq 0) {
+                    Write-Warning "No scenario files were found. Check -FileFilter pattern";
+                }
             }
         }
         catch {
@@ -391,10 +394,10 @@ function Set-HCBScenario {
                 }
     
                 Write-Information "Uploading ""$($scenario.name)"" to $Tenant";
-                $scenario | ConvertTo-Json -Depth 100 | Invoke-WebRequest $apiUrl -Method POST -Authentication OAuth -Token $jwtToken -ContentType "application/json" | Out-Null;
+                $scenario | ConvertTo-Json -Depth 100 | Invoke-WebRequest $apiUrl -Method POST -Authentication OAuth -Token $jwtToken -ContentType "application/json; charset=utf-8" | Out-Null;
             }
             catch [Microsoft.PowerShell.Commands.HttpResponseException] {
-                throw "Failed to request data from Health Bot Service: ""$_""";
+                throw "Update request to Health Bot Service failed: ""$_""";
             }
             catch {
                 # Too Generic ArgumentException, therefore here
