@@ -16,7 +16,7 @@ on:
     #   - "Scenarios/**"
 
 jobs:
-  ci:
+  CI:
     runs-on: ubuntu-latest
 
     env:
