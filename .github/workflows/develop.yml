@@ -75,7 +75,6 @@ jobs:
           tag_name: ${{ env.semVer }}
           release_name: Release ${{ env.semVer }}
           body: |
-            Releasing new Release Asset
+            Creating a new release
             draft: false
             prerelease: false
-
