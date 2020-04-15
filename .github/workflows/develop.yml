@@ -9,11 +9,11 @@ name: CI/CD Pipeline
 on:
   # Execute on pushes to master branch.
   push:
-    # branches: 
-    #   - master
-    # # The push must include changes to Scenarios.
-    # paths:
-    #   - "Scenarios/**"
+    branches: 
+      - master
+    # The push must include changes to Scenarios.
+    paths:
+      - "Scenarios/**"
 
 jobs:
   CICD:
