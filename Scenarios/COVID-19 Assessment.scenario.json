@@ -1,10 +1,10 @@
 {
   "name": "COVID-19 Assessment",
-  "id": "68e331d5-2a17-40e5-8f7d-0af146a4e8e1",
+  "id": "46cb9fcf-6514-4127-8f42-fc947ae454b0",
   "scenario_trigger": "covid19_assessment",
   "description": "Provide guidance to patients on COVID-19 with a remote virtual assessment",
   "active": true,
-  "updated": "2020-04-15T19:30:41.123Z",
+  "updated": "2020-04-15T20:53:45.205Z",
   "userDisplayName": "Chris Mayo",
   "code": {
     "version": 3,
