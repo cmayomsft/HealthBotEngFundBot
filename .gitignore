@@ -4,6 +4,3 @@ node_modules/
 
 # Ignore scenario files created when testing import/export.
 Scripts/ScenarioImportExport/HCBotScenarioIE/temp/
-
-# Ignore PS script I'll use for testing.
-test.ps1
