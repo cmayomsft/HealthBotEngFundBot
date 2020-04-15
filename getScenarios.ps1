@@ -5,4 +5,4 @@ Set-PsEnv
 
 Import-Module -Name ./Scripts/ScenarioImportExport/HCBotScenarioIE/;
 # Export Scenarios from the bot instance specified in .env variables to the ./Scenarios folder.
-Get-HCBScenario -Tenant $env:SOURCE_TENANT_NAME -SaveToFolder ./Scenarios -ParseCode -JwtSecret $env:SOURCE_JWT_SECRET -InformationAction Continue;
+Get-HCBScenario -Tenant $env:MY_DEV_TENANT_NAME -SaveToFolder ./Scenarios -ParseCode -JwtSecret $env:MY_DEV_JWT_SECRET -InformationAction Continue;
