@@ -16,7 +16,7 @@ on:
     #   - "Scenarios/**"
 
 jobs:
-  CI:
+  CICD:
     runs-on: ubuntu-latest
 
     env:
@@ -32,20 +32,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # # https://github.com/anothrNick/github-tag-action
-      # - name: Bump version and DON'T push tag
-      #   id: bumpVersion
-      #   uses: anothrNick/github-tag-action@1.17.2
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     WITH_V: true
-      #     DRY_RUN: true
-      #     DEFAULT_BUMP: patch
-      #     RELEASE_BRANCHES: master
+      # https://github.com/anothrNick/github-tag-action
+      - name: Bump version and DON'T push tag
+        id: bumpVersion
+        uses: anothrNick/github-tag-action@1.17.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DRY_RUN: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: master
 
-      # # Set internal variables that the user will not want to set themselves.
-      # - name: Set environment variables
-      #   run: echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
+      # Set internal variables that the user will not want to set themselves.
+      - name: Set environment variables
+        run: echo "::set-env name=semVer::${{ steps.bumpVersion.outputs.new_tag }}"
 
       ###########################################################################
       #
@@ -66,16 +66,16 @@ jobs:
       #
       ###########################################################################
 
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ env.semVer }}
-      #     release_name: Release ${{ env.semVer }}
-      #     body: |
-      #       Releasing new Release Asset
-      #       draft: false
-      #       prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.semVer }}
+          release_name: Release ${{ env.semVer }}
+          body: |
+            Releasing new Release Asset
+            draft: false
+            prerelease: false
 
